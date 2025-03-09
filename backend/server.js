@@ -8,6 +8,8 @@ dotenv.config(); // configure dotenv to allow us to read from process.env
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+app.use(express.json()); //parse JSON request bodies
+
 app.use("/api/v1/auth", authRoutes);  // configure routes. /v1 is used for version control.
 
 app.listen(PORT, () => {
