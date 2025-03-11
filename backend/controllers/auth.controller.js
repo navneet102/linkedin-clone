@@ -2,6 +2,7 @@ import User from "../models/user.model.js";
 import bcrypt from "bcryptjs"; // For hashing password.
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import { sendWelcomeEmail } from "../emails/emailHandlers.js";
 
 dotenv.config();
 export const signup = async (req, res) => {
@@ -49,6 +50,14 @@ export const signup = async (req, res) => {
         res.status(201).json({ message: "User registered sucessfully" });
 
         // todo : send email
+
+        const profileUrl = process.env.CLIENT_URL + "/profile/" + user.username;
+
+        try {  // NOTE: Using try catch here becuase we dont want to return error 500 if email not sent. The user is created, email is just addition.
+            await sendWelcomeEmail(user.email, user.name, profileUrl);
+        } catch (emailError) {
+            console.error("Error sending welcome email", emailError);
+        }
 
     } catch (error) {
         console.log("Error in signup: ", error.message);
