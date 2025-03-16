@@ -8,7 +8,7 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query' //Used for managing hooks easily
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 document.documentElement.setAttribute('data-theme', 'linkedin')
 
